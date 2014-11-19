@@ -30,10 +30,6 @@
 # Any suggestions are welcome. You can leave your contribution, or check, for updates at:
 # https://github.com/rsn86/MWB-DBDocPy
 
-################################################################################
-# En este fork solo se agregan las traducciones en español. Por Christian Gomez
-################################################################################
-
 from wb import *
 import grt
 from mforms import FileChooser
@@ -57,7 +53,7 @@ def htmlDataDictionary(catalog):
   schema = catalog.schemata[0]
   htmlFile = open(htmlOut, "w")
   print >>htmlFile, "<html><head>"
-  print >>htmlFile, "<title>Diccionario de datos: %s</title>" % (schema.name)
+  print >>htmlFile, "<title>Data dictionary: %s</title>" % (schema.name)
   print >>htmlFile, """<style>
     td,th {
       text-align:center; 
@@ -87,7 +83,7 @@ def htmlDataDictionary(catalog):
 <body>"""
   for table in schema.tables:
     print >>htmlFile, "<table><caption>Tabla: %s - %s</caption>" % (table.name, table.comment)
-    print >>htmlFile, """<tr><td colspan=\"7\">Attributes</td></tr>
+    print >>htmlFile, """<tr><td colspan=\"7\">Atributos</td></tr>
 <tr>
 <th>Nombre</th>
 <th>Tipo</th>
@@ -112,14 +108,14 @@ def consoleDataDictionary(catalog):
   # Put plugin contents here
   # iterate through columns from schema
   schema = catalog.schemata[0]
-  print "Base de datos: %s" % (schema.name)
+  print "Schema: %s" % (schema.name)
   for table in schema.tables:
-    print "\tTabla: %s - %s" % (table.name, table.comment)
+    print "\tTable: %s - %s" % (table.name, table.comment)
     for column in table.columns:
-      pk = ('No', 'Si')[bool(table.isPrimaryKeyColumn(column))]
-      fk = ('No', 'Si')[bool(table.isForeignKeyColumn(column))]
+      pk = ('No', 'Yes')[bool(table.isPrimaryKeyColumn(column))]
+      fk = ('No', 'Yes')[bool(table.isForeignKeyColumn(column))]
       nn = ('No', 'Yes')[bool(column.isNotNull)]
-      print "\t\tNombre: %s, Tipo: %s, NN: %s, PK: %s, FK: %s, Valor por defecto: %s, Comentario: %s" % (column.name, column.formattedType, nn, pk, fk, column.defaultValue, column.comment)
+      print "\t\tName: %s, Type: %s, NN: %s, PK: %s, FK: %s, Default: %s, Comment: %s" % (column.name, column.formattedType, nn, pk, fk, column.defaultValue, column.comment)
 #      print "\t\t\tFormated Type: %s" % column.formattedType
 #      print "\t\tFormated RAW Type: %s" % column.formattedRawType
 #      print "\t\tSimple Type: %s" % column.simpleType
