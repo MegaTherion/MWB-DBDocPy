@@ -30,6 +30,10 @@
 # Any suggestions are welcome. You can leave your contribution, or check, for updates at:
 # https://github.com/rsn86/MWB-DBDocPy
 
+################################################################################
+# En este fork solo se agregan las traducciones en español. Por Christian Gomez
+################################################################################
+
 from wb import *
 import grt
 from mforms import FileChooser
@@ -53,7 +57,7 @@ def htmlDataDictionary(catalog):
   schema = catalog.schemata[0]
   htmlFile = open(htmlOut, "w")
   print >>htmlFile, "<html><head>"
-  print >>htmlFile, "<title>Data dictionary: %s</title>" % (schema.name)
+  print >>htmlFile, "<title>Diccionario de datos: %s</title>" % (schema.name)
   print >>htmlFile, """<style>
     td,th {
       text-align:center; 
@@ -82,21 +86,21 @@ def htmlDataDictionary(catalog):
 </head>
 <body>"""
   for table in schema.tables:
-    print >>htmlFile, "<table><caption>Table: %s - %s</caption>" % (table.name, table.comment)
+    print >>htmlFile, "<table><caption>Tabla: %s - %s</caption>" % (table.name, table.comment)
     print >>htmlFile, """<tr><td colspan=\"7\">Attributes</td></tr>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Not Null</th>
-<th>PK</th>
-<th>FK</th>
-<th>Default</th>
-<th>Comment</th>
+<th>Nombre</th>
+<th>Tipo</th>
+<th>No Nulo</th>
+<th>Llave primaria</th>
+<th>Llave foranea</th>
+<th>Valor por defecto</th>
+<th>Descripcion</th>
 </tr>"""
     for column in table.columns:
-      pk = ('No', 'Yes')[bool(table.isPrimaryKeyColumn(column))]
-      fk = ('No', 'Yes')[bool(table.isForeignKeyColumn(column))]
-      nn = ('No', 'Yes')[bool(column.isNotNull)]
+      pk = ('No', 'Si')[bool(table.isPrimaryKeyColumn(column))]
+      fk = ('No', 'Si')[bool(table.isForeignKeyColumn(column))]
+      nn = ('No', 'Si')[bool(column.isNotNull)]
       print >>htmlFile, "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>" % (column.name,column.formattedType,nn,pk,fk,column.defaultValue,column.comment)
     print >>htmlFile, "</table></br>"
   print >>htmlFile, "</body></html>"
@@ -108,14 +112,14 @@ def consoleDataDictionary(catalog):
   # Put plugin contents here
   # iterate through columns from schema
   schema = catalog.schemata[0]
-  print "Schema: %s" % (schema.name)
+  print "Base de datos: %s" % (schema.name)
   for table in schema.tables:
-    print "\tTable: %s - %s" % (table.name, table.comment)
+    print "\tTabla: %s - %s" % (table.name, table.comment)
     for column in table.columns:
-      pk = ('No', 'Yes')[bool(table.isPrimaryKeyColumn(column))]
-      fk = ('No', 'Yes')[bool(table.isForeignKeyColumn(column))]
+      pk = ('No', 'Si')[bool(table.isPrimaryKeyColumn(column))]
+      fk = ('No', 'Si')[bool(table.isForeignKeyColumn(column))]
       nn = ('No', 'Yes')[bool(column.isNotNull)]
-      print "\t\tName: %s, Type: %s, NN: %s, PK: %s, FK: %s, Default: %s, Comment: %s" % (column.name, column.formattedType, nn, pk, fk, column.defaultValue, column.comment)
+      print "\t\tNombre: %s, Tipo: %s, NN: %s, PK: %s, FK: %s, Valor por defecto: %s, Comentario: %s" % (column.name, column.formattedType, nn, pk, fk, column.defaultValue, column.comment)
 #      print "\t\t\tFormated Type: %s" % column.formattedType
 #      print "\t\tFormated RAW Type: %s" % column.formattedRawType
 #      print "\t\tSimple Type: %s" % column.simpleType
